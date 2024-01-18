@@ -6,10 +6,17 @@ export declare class Snake {
     private score;
     private running;
     private t;
+    private first;
+    private last;
+    dx: number;
+    dy: number;
     constructor(canvas: HTMLCanvasElement);
+    isRunning(): boolean;
+    private initFirstLast;
     run(): void;
     private tick;
     private prepareMove;
+    private changeFirstLast;
     private moveMoving;
     private generateGround;
     private addSnakeCube;

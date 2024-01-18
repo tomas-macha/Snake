@@ -38,6 +38,7 @@ export declare class Cube {
     y: number;
     z: number;
     color: Color;
+    render: boolean;
     constructor(x: number, y: number, z: number, color: Color);
     set(x: number, y: number, z: number): void;
 }

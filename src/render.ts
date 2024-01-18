@@ -65,6 +65,7 @@ export class Render {
 		this.ctx.fillStyle="#222";
 		this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 		this.cubes.forEach(cube => {
+			if(!cube.render) return;
 			this.paintCube(
 				this.dx+ (cube.x+cube.y)*this.r*deg30,
 				this.dy+ (cube.x-cube.y - 2*cube.z)*this.r/2,
@@ -99,7 +100,7 @@ export class Render {
 		this.ctx.fillStyle = bg;
 		this.ctx.strokeStyle = "#222";
 		this.ctx.fill();
-		this.ctx.stroke();
+		//this.ctx.stroke();
 	}
 
 }
@@ -110,6 +111,7 @@ export class Cube {
 	public y: number;
 	public z: number;
 	public color: Color;
+	public render: boolean = true;
 
 	constructor(x: number, y: number, z: number, color: Color) {
 		this.x = x;
