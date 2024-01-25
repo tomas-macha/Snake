@@ -20,16 +20,8 @@ const colors: {[k: string]: Color} = {
 	}
 }
 
-const colorsSmart: {[k:string]: (i: number)=>Color} = {
-    snake: (i:number) => {return{
-		l: `hsl(${i*5+220}, 70%, 50%)`,
-        r: `hsl(${i*5+220}, 80%, 60%)`,
-        t: `hsl(${i*5+220}, 750%, 70%)`
-    }}
-}
-
 const fps = 30;
-const duration = 500;
+const duration = 300;
 const fpp = fps*duration/1000;
 const size = 11;
 
@@ -84,14 +76,18 @@ export class Snake {
         const first = new Cube(0, 0, 1, colors.snake, "#0000");
 		this.first = {cube: first, from: {x:0,y:0}, to:{x:0,y:0}}
 		this.render.addCube(first);
+        this.first.cube.render = false;
         const last = new Cube(0, 0, 1, colors.snake, "#0000");
 		this.last = {cube: last, from: {x:0,y:0}, to:{x:0,y:0}}
 		this.render.addCube(last);
+        this.last.cube.render = false;
     }
 
     public run(): void {
         if(this.running) return;
         this.running = true;
+        if(this.first)this.first.cube.render = true;
+        if(this.last)this.last.cube.render = true;
         this.changeFirstLast();
         this.interval = setInterval(()=>{
             this.tick();

@@ -5,7 +5,7 @@ let snake: Snake;
 
 function lose(score: number) {
 	alert(`You lost! You score is ${score}.`);
-	snake = new Snake(document.getElementById("can") as HTMLCanvasElement, lose);
+	window.location.reload();
 }
 
 snake = new Snake(document.getElementById("can") as HTMLCanvasElement, lose);

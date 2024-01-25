@@ -2,7 +2,7 @@ import { Snake } from "./snake.js";
 let snake;
 function lose(score) {
     alert(`You lost! You score is ${score}.`);
-    snake = new Snake(document.getElementById("can"), lose);
+    window.location.reload();
 }
 snake = new Snake(document.getElementById("can"), lose);
 window.addEventListener("keydown", e => {
