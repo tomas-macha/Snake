@@ -75,7 +75,6 @@ export class Snake {
             this.prepareMove();
     }
     prepareMove() {
-        console.log("Prepare");
         this.t = 0;
         if (!(this.first && this.last))
             return;
@@ -85,11 +84,21 @@ export class Snake {
             this.snake[i].render = true;
         }
         this.snake[0].set(this.first.to.x, this.first.to.y, 1);
+        this.checkMove();
         this.changeFirstLast();
         const lastSnake = this.snake.at(-1);
         if (lastSnake)
             lastSnake.render = false;
         this.render.render();
+    }
+    checkMove() {
+        if (!(this.first && this.last))
+            return;
+        const x = this.snake[0].x + Number(this.dx);
+        const y = this.snake[0].y + Number(this.dy);
+        if (x == this.apple.x && y == this.apple.y) {
+            this.addSnakeCube(this.last.to.x, this.last.to.y);
+        }
     }
     changeFirstLast() {
         var _a, _b, _c, _d, _e, _f, _g, _h;
@@ -102,7 +111,6 @@ export class Snake {
     }
     moveMoving() {
         const p = this.t / fpp;
-        console.log("Move", p);
         if (!(this.first && this.last))
             return;
         // f(1-p) + t*p

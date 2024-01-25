@@ -101,9 +101,7 @@ export class Snake {
     }
 
     private prepareMove(): void {
-        console.log("Prepare");
         this.t = 0;
-
         if(! (this.first && this.last)) return;
         // Move snake
         for(let i = this.snake.length-1; i >= 1; i--) {
@@ -111,10 +109,25 @@ export class Snake {
             this.snake[i].render = true;
         }
         this.snake[0].set(this.first.to.x, this.first.to.y, 1);
+        this.checkMove();
         this.changeFirstLast();
         const lastSnake = this.snake.at(-1);
         if(lastSnake) lastSnake.render = false;
         this.render.render();
+    }
+
+    private checkMove(): void {
+        if(! (this.first && this.last)) return;
+        const x = this.snake[0].x+Number(this.dx);
+        const y = this.snake[0].y+Number(this.dy);
+        if(x == this.apple.x && y == this.apple.y) {
+            this.addSnakeCube(this.last.to.x, this.last.to.y);
+            this.score++;
+        }
+    }
+
+    private generateApple(): boolean {
+        const x = 
     }
 
     private changeFirstLast() {
@@ -127,7 +140,7 @@ export class Snake {
 
     private moveMoving(): void {
         const p = this.t/fpp;
-        console.log("Move", p);
+
         if(!(this.first && this.last)) return;
         // f(1-p) + t*p
         this.first.cube.set(this.first.from.x*(1-p) + this.first.to.x*p, this.first.from.y*(1-p) + this.first.to.y*p, 1);

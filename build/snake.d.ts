@@ -16,6 +16,7 @@ export declare class Snake {
     run(): void;
     private tick;
     private prepareMove;
+    private checkMove;
     private changeFirstLast;
     private moveMoving;
     private generateGround;
