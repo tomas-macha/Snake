@@ -16,6 +16,15 @@ const colors = {
         t: "#a4161a"
     }
 };
+const colorsSmart = {
+    snake: (i) => {
+        return {
+            l: `hsl(${i * 5 + 220}, 70%, 50%)`,
+            r: `hsl(${i * 5 + 220}, 80%, 60%)`,
+            t: `hsl(${i * 5 + 220}, 750%, 70%)`
+        };
+    }
+};
 const fps = 30;
 const duration = 500;
 const fpp = fps * duration / 1000;
@@ -30,7 +39,7 @@ export class Snake {
         this.dx = 0;
         this.dy = 1;
         this.render = new Render(canvas);
-        this.apple = new Cube(5, 5, 1, colors.apple);
+        this.apple = new Cube(5, 5, 1, colors.apple, "#0000");
         this.render.addCube(this.apple);
         this.generateGround();
         this.addSnakeCube((size - 1) / 2, 3);
@@ -43,10 +52,10 @@ export class Snake {
         return this.running;
     }
     initFirstLast() {
-        const first = new Cube(0, 0, 1, colors.snake);
+        const first = new Cube(0, 0, 1, colors.snake, "#0000");
         this.first = { cube: first, from: { x: 0, y: 0 }, to: { x: 0, y: 0 } };
         this.render.addCube(first);
-        const last = new Cube(0, 0, 1, colors.snake);
+        const last = new Cube(0, 0, 1, colors.snake, "#0000");
         this.last = { cube: last, from: { x: 0, y: 0 }, to: { x: 0, y: 0 } };
         this.render.addCube(last);
     }
@@ -104,14 +113,14 @@ export class Snake {
     generateGround() {
         for (let x = 0; x < size; x++) {
             for (let y = 0; y < size; y++) {
-                const cube = new Cube(x, y, 0, colors.ground);
+                const cube = new Cube(x, y, 0, colors.ground, "#222");
                 this.ground.push(cube);
                 this.render.addCube(cube);
             }
         }
     }
     addSnakeCube(x, y) {
-        const sc = new Cube(x, y, 1, colors.snake);
+        const sc = new Cube(x, y, 1, colors.snake, "#0000");
         this.snake.push(sc);
         this.render.addCube(sc);
     }

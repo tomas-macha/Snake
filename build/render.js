@@ -47,10 +47,10 @@ export class Render {
         this.cubes.forEach(cube => {
             if (!cube.render)
                 return;
-            this.paintCube(this.dx + (cube.x + cube.y) * this.r * deg30, this.dy + (cube.x - cube.y - 2 * cube.z) * this.r / 2, cube.color);
+            this.paintCube(this.dx + (cube.x + cube.y) * this.r * deg30, this.dy + (cube.x - cube.y - 2 * cube.z) * this.r / 2, cube.color, cube.stroke);
         });
     }
-    paintCube(x, y, colors) {
+    paintCube(x, y, colors, stroke) {
         const ver = {
             a: { x: x, y: y - this.r },
             b: { x: x + this.r * deg30, y: y - this.r / 2 },
@@ -60,11 +60,11 @@ export class Render {
             f: { x: x - this.r * deg30, y: y - this.r / 2 },
             _: { x, y }
         };
-        this.paint4EdgesThing(ver.f, ver._, ver.d, ver.e, colors.l);
-        this.paint4EdgesThing(ver.b, ver.c, ver.d, ver._, colors.r);
-        this.paint4EdgesThing(ver.a, ver.b, ver._, ver.f, colors.t);
+        this.paint4EdgesThing(ver.f, ver._, ver.d, ver.e, colors.l, stroke);
+        this.paint4EdgesThing(ver.b, ver.c, ver.d, ver._, colors.r, stroke);
+        this.paint4EdgesThing(ver.a, ver.b, ver._, ver.f, colors.t, stroke);
     }
-    paint4EdgesThing(a, b, c, d, bg) {
+    paint4EdgesThing(a, b, c, d, bg, stroke) {
         this.ctx.beginPath();
         this.ctx.moveTo(a.x, a.y);
         this.ctx.lineTo(b.x, b.y);
@@ -72,18 +72,19 @@ export class Render {
         this.ctx.lineTo(d.x, d.y);
         this.ctx.closePath();
         this.ctx.fillStyle = bg;
-        this.ctx.strokeStyle = "#222";
+        this.ctx.strokeStyle = stroke;
         this.ctx.fill();
-        //this.ctx.stroke();
+        this.ctx.stroke();
     }
 }
 export class Cube {
-    constructor(x, y, z, color) {
+    constructor(x, y, z, color, stroke) {
         this.render = true;
         this.x = x;
         this.y = y;
         this.z = z;
         this.color = color;
+        this.stroke = stroke;
     }
     set(x, y, z) {
         this.x = x;

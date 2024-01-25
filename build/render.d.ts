@@ -18,7 +18,7 @@ export declare class Render {
     render(): void;
     private sort;
     private paint;
-    paintCube(x: number, y: number, colors: Color): void;
+    paintCube(x: number, y: number, colors: Color, stroke: string): void;
     paint4EdgesThing(a: {
         x: number;
         y: number;
@@ -31,7 +31,7 @@ export declare class Render {
     }, d: {
         x: number;
         y: number;
-    }, bg: string): void;
+    }, bg: string, stroke: string): void;
 }
 export declare class Cube {
     x: number;
@@ -39,6 +39,7 @@ export declare class Cube {
     z: number;
     color: Color;
     render: boolean;
-    constructor(x: number, y: number, z: number, color: Color);
+    stroke: string;
+    constructor(x: number, y: number, z: number, color: Color, stroke: string);
     set(x: number, y: number, z: number): void;
 }
