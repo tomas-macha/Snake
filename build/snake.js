@@ -98,7 +98,29 @@ export class Snake {
         const y = this.snake[0].y + Number(this.dy);
         if (x == this.apple.x && y == this.apple.y) {
             this.addSnakeCube(this.last.to.x, this.last.to.y);
+            this.score++;
+            while (this.generateApple()) { }
         }
+        if (this.snake.find(it => {
+            return it.x == x && it.y == y;
+        }) !== undefined) {
+            alert(`You lost! You score is ${this.score}.`);
+        }
+    }
+    generateApple() {
+        const x = Math.floor(Math.random() * (10 - 0 + 1)) + 0;
+        const y = Math.floor(Math.random() * (10 - 0 + 1)) + 0;
+        if (this.first && this.first.to.x == x && this.first.to.y == y)
+            return true;
+        if (this.last && this.last.from.x == x && this.last.from.y == y)
+            return true;
+        const exist = this.snake.find(it => {
+            return it.x == x && it.y == y;
+        }) !== undefined;
+        if (exist)
+            return true;
+        this.apple.set(x, y, 1);
+        return false;
     }
     changeFirstLast() {
         var _a, _b, _c, _d, _e, _f, _g, _h;
