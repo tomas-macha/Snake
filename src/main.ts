@@ -1,7 +1,15 @@
 import { Snake } from "./snake.js";
 
 
-const snake = new Snake(document.getElementById("can") as HTMLCanvasElement);
+let snake: Snake;
+
+function lose(score: number) {
+	alert(`You lost! You score is ${score}.`);
+	snake = new Snake(document.getElementById("can") as HTMLCanvasElement, lose);
+}
+
+snake = new Snake(document.getElementById("can") as HTMLCanvasElement, lose);
+
 
 window.addEventListener("keydown", e => {
 	if(!snake.isRunning()) snake.run();

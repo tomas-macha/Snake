@@ -53,7 +53,12 @@ export class Snake {
     public dx: number = 0;
     public dy: number = 1;
 
-    constructor(canvas: HTMLCanvasElement) {
+    private readonly onLose: (score: number)=>void;
+
+    private interval: NodeJS.Timeout|undefined;
+
+    constructor(canvas: HTMLCanvasElement, lose: (score: number)=>void) {
+        this.onLose = lose;
         this.render = new Render(canvas);
         
         this.apple = new Cube(5, 5, 1, colors.apple, "#0000");
@@ -88,7 +93,7 @@ export class Snake {
         if(this.running) return;
         this.running = true;
         this.changeFirstLast();
-        setInterval(()=>{
+        this.interval = setInterval(()=>{
             this.tick();
         }, duration/fpp);
 
@@ -130,8 +135,15 @@ export class Snake {
                 return it.x == x && it.y == y;
             }) !== undefined
         ) {
-            alert(`You lost! You score is ${this.score}.`);
+            this.lose();
         }
+        if(x < 0 || y < 0 || x >= size || y >= size) this.lose();
+    }
+
+    private lose(): void {
+        this.running = false;
+        clearInterval(this.interval);
+        this.onLose(this.score);
     }
 
     private generateApple(): boolean {

@@ -30,7 +30,7 @@ const duration = 500;
 const fpp = fps * duration / 1000;
 const size = 11;
 export class Snake {
-    constructor(canvas) {
+    constructor(canvas, lose) {
         this.ground = [];
         this.snake = []; // Queue
         this.score = 2;
@@ -38,6 +38,7 @@ export class Snake {
         this.t = 0;
         this.dx = 0;
         this.dy = 1;
+        this.onLose = lose;
         this.render = new Render(canvas);
         this.apple = new Cube(5, 5, 1, colors.apple, "#0000");
         this.render.addCube(this.apple);
@@ -64,7 +65,7 @@ export class Snake {
             return;
         this.running = true;
         this.changeFirstLast();
-        setInterval(() => {
+        this.interval = setInterval(() => {
             this.tick();
         }, duration / fpp);
     }
@@ -104,8 +105,15 @@ export class Snake {
         if (this.snake.find(it => {
             return it.x == x && it.y == y;
         }) !== undefined) {
-            alert(`You lost! You score is ${this.score}.`);
+            this.lose();
         }
+        if (x < 0 || y < 0 || x >= size || y >= size)
+            this.lose();
+    }
+    lose() {
+        this.running = false;
+        clearInterval(this.interval);
+        this.onLose(this.score);
     }
     generateApple() {
         const x = Math.floor(Math.random() * (10 - 0 + 1)) + 0;
